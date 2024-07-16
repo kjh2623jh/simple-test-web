@@ -18,6 +18,19 @@ app.get("/notion-data", async (req, res) => {
   try {
     const response = await notion.databases.query({
       database_id: databaseId,
+      /*
+      filter: {
+        property: 'Last ordered',
+        date: {
+          past_week: {},
+        },
+      },*/
+      sorts: [
+        {
+          timestamp: "소요시간",
+          direction: "descending",
+        },
+      ],
     });
     res.json(response);
   } catch (error) {
