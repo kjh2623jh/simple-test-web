@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./css/Test.css";
+
+// const NOTION_API_KEY = `secret_tceQ4JUkB7qfSCdhTstWa5CowlkH1S4cMcxvnwF5G21`;
+
+// (async () => {
+//   console.log(response);
+// })();
 
 function Test() {
   const [section, setSection] = useState(0);
-  // let section = 0;
+  const [json, setJson] = useState("");
+
+  const getNotionData = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/notion-data");
+      const data = await response.json();
+      setJson(data);
+    } catch (error) {
+      console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
+    }
+  };
+
+  useEffect(() => {
+    getNotionData();
+  }, []);
+
   const selections = [
     {},
     {
@@ -31,6 +52,7 @@ function Test() {
 
   const Select = (event) => {
     setSection(section + 1);
+    console.log(json);
   };
 
   return (
@@ -55,6 +77,7 @@ function Test() {
             <button
               className="btn start"
               onClick={() => setSection(section + 1)}
+              style={{ width: "130px" }}
             >
               <span>시작하기</span>
             </button>
