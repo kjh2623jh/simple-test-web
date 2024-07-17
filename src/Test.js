@@ -1,22 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./css/Test.css";
 
 function Test() {
   const [section, setSection] = useState(0);
-  const [json, setJson] = useState("a");
-  const [result, setResult] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch("http://localhost:3001/notion-data");
-        const data = await response.json();
-        setJson(data);
-      } catch (error) {
-        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-      }
-    })();
-  }, []);
+  const [answer, setAnswer] = useState("");
+  const navigate = useNavigate();
 
   const selections = [
     {},
@@ -61,8 +50,9 @@ function Test() {
 
   const Select = (event) => {
     if (section + 1 >= selections.length) {
-      result = true;
+      navigate(`/result/${answer}`);
     } else {
+      setAnswer("asd");
       setSection(section + 1);
     }
   };
@@ -75,7 +65,7 @@ function Test() {
             <div className="text">{selections[section].text}</div>
             <hr />
             {selections[section].q.map((question) => (
-              <div>
+              <div key={question}>
                 <button className="btn option" onClick={Select}>
                   {question}
                 </button>

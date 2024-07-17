@@ -1,11 +1,17 @@
+import Result from "./Result";
+
 const express = require("express");
 const { Client } = require("@notionhq/client");
 const cors = require("cors");
 
 const app = express();
 const port = 3001;
+const corsOptions = {
+  origin: [`hhtp://localhost:${port}`],
+};
+Result.res;
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const notion = new Client({
@@ -14,23 +20,25 @@ const notion = new Client({
 
 const databaseId = "e33d0d3ad5764d6f83572a11508d40b8";
 
-app.get("/notion-data", async (req, res) => {
+app.get("/notion-data/:result", async (req, res) => {
   try {
+    const { result } = useParams(); // result 값 가져오는 방법 생각.
     const response = await notion.databases.query({
       database_id: databaseId,
-      /*
       filter: {
-        property: 'Last ordered',
-        date: {
-          past_week: {},
+        property: "소요시간",
+        multi_select: {
+          contains: "4시간(-2000kcal)",
         },
-      },*/
+      },
+      /*
       sorts: [
         {
           timestamp: "소요시간",
           direction: "descending",
         },
       ],
+      */
     });
     res.json(response);
   } catch (error) {

@@ -1,17 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Test from "./Test";
 import Result from "./Result";
-import "./css/App.css";
+import ResultErrorPage from "./ResultErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Test />,
-    // errorElement: <ErrorPage />,
   },
   {
-    path: "/reslut/:id",
+    path: "/result/:result",
     element: <Result />,
+    errorElement: <ResultErrorPage />,
   },
 ]);
 
