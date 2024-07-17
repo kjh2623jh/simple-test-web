@@ -8,13 +8,12 @@ function Result() {
 
   useEffect(() => {
     (async () => {
-      try {
-        const response = await fetch(`http://localhost:3001/notion-data`);
-        const data = await response.json();
-        setJson(data);
-      } catch (error) {
-        console.error("데이터를 가져오는 중 오류가 발생했습니다:", error);
-      }
+      const response = await fetch(`http://localhost:3001/notion-data`)
+        .then((response) => response.json())
+        .catch((error) =>
+          console.error("데이터를 가져오는 중 오류가 발생했습니다.", error)
+        );
+      setJson(response);
     })();
   }, []);
 
@@ -22,7 +21,14 @@ function Result() {
     <div className="Result">
       <div>aa</div>
       <div>{result}</div>
-      <div>{JSON.stringify(json)}</div>
+
+      <div>
+        {json?.results?.map((route) => (
+          <div key={route.id}>
+            {JSON.stringify(route.properties["산-등산로"].title[0])}
+          </div>
+        ))}
+      </div>
       <Link to="/">back</Link>
     </div>
   );
