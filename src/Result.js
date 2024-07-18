@@ -4,7 +4,7 @@ import "./css/Result.css";
 
 function Result() {
   const { result } = useParams();
-  const [json, setJson] = useState("");
+  const [json, setJson] = useState();
 
   // notion api. fetch filtered json
   useEffect(() => {
@@ -23,7 +23,7 @@ function Result() {
   return (
     <div className="Result">
       <h1>결과!!</h1>
-      {json !== undefined && json.result !== undefined ? (
+      {json ? (
         <div>
           {json?.results?.map((route) => (
             <div key={route.id} className="body">
@@ -80,7 +80,6 @@ function Result() {
           </div>
         </div>
       )}
-
       <Link to="/">back</Link>
     </div>
   );

@@ -55,24 +55,23 @@ function Test() {
 
   const Submit = (event) => {
     event.preventDefault();
-
+    let newAnswer = "";
     const len = selections[section].q.length;
-    const createAnswer = () => {
-      let newAnswer = "";
-      for (let index = 0; index < len; index++) {
-        const element = event.target[index];
-        if (element.checked) {
-          newAnswer += section.toString() + element.labels[0].id;
-          element.checked = false;
-        }
+
+    for (let index = 0; index < len; index++) {
+      const element = event.target[index];
+      if (element.checked) {
+        newAnswer += section.toString() + element.labels[0].id;
+        element.checked = false;
       }
-      return newAnswer;
-    };
+    }
+
+    if (newAnswer === "") return;
 
     if (section + 1 >= selections.length) {
-      navigate(`/result/${answer + createAnswer()}`);
+      navigate(`/result/${answer + newAnswer}`);
     } else {
-      setAnswer(answer + createAnswer());
+      setAnswer(answer + newAnswer);
       setCounter(counter + len);
       setSection(section + 1);
     }
