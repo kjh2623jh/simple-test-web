@@ -5,6 +5,7 @@ import "./css/Test.css";
 function Test() {
   const [section, setSection] = useState(0);
   const [answer, setAnswer] = useState("");
+  const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
 
   const selections = [
@@ -46,13 +47,33 @@ function Test() {
         "차,안내버스 이용",
       ],
     },
+    {
+      text: "정상 포함 여부",
+      q: ["정상포함 (정상석x)", "정상포함 (정상석o)", "미포함"],
+    },
   ];
 
-  const Select = (event) => {
+  const Submit = (event) => {
+    event.preventDefault();
+
+    const len = selections[section].q.length;
+    const createAnswer = () => {
+      let newAnswer = "";
+      for (let index = 0; index < len; index++) {
+        const element = event.target[index];
+        if (element.checked) {
+          newAnswer += section.toString() + element.labels[0].id;
+          element.checked = false;
+        }
+      }
+      return newAnswer;
+    };
+
     if (section + 1 >= selections.length) {
-      navigate(`/result/${answer}`);
+      navigate(`/result/${answer + createAnswer()}`);
     } else {
-      setAnswer("asd");
+      setAnswer(answer + createAnswer());
+      setCounter(counter + len);
       setSection(section + 1);
     }
   };
@@ -64,14 +85,26 @@ function Test() {
           <div>
             <div className="text">{selections[section].text}</div>
             <hr />
-            {selections[section].q.map((question) => (
-              <div key={question}>
-                <button className="btn option" onClick={Select}>
-                  {question}
-                </button>
-                <br /> <br />
-              </div>
-            ))}
+            <form className="options" onSubmit={Submit}>
+              {selections[section].q.map((question, idx) => (
+                <div key={idx}>
+                  <input type="checkbox" id={`check${idx}`}></input>
+                  <label
+                    htmlFor={`check${idx}`}
+                    className="btn option"
+                    id={(counter + idx).toString(20)}
+                    style={{ height: "25px", userSelect: "none" }}
+                  >
+                    {question}
+                  </label>
+                  <br /> <br />
+                </div>
+              ))}
+              <br />
+              <button type="submit" className="button">
+                Submit
+              </button>
+            </form>
           </div>
         ) : (
           <div>

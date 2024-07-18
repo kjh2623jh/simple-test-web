@@ -6,9 +6,12 @@ function Result() {
   const { result } = useParams();
   const [json, setJson] = useState("");
 
+  // notion api. fetch filtered json
   useEffect(() => {
     (async () => {
-      const response = await fetch(`http://localhost:3001/notion-data`)
+      const response = await fetch(
+        `http://localhost:3001/notion-data/${result}`
+      )
         .then((response) => response.json())
         .catch((error) =>
           console.error("데이터를 가져오는 중 오류가 발생했습니다.", error)
@@ -19,16 +22,65 @@ function Result() {
 
   return (
     <div className="Result">
-      <div>aa</div>
-      <div>{result}</div>
-
-      <div>
-        {json?.results?.map((route) => (
-          <div key={route.id}>
-            {JSON.stringify(route.properties["산-등산로"].title[0])}
+      <h1>결과!!</h1>
+      {json !== undefined && json.result !== undefined ? (
+        <div>
+          {json?.results?.map((route) => (
+            <div key={route.id} className="body">
+              <div className="img"></div>
+              <div className="text">
+                {JSON.stringify(
+                  route.properties["산-등산로"].title[0].plain_text
+                ).slice(1, -1)}
+              </div>
+              <div className="description">
+                <div className="item">
+                  <img></img>
+                  <div>
+                    {JSON.stringify(route.properties["소요시간"].select.name)
+                      .split("(")[0]
+                      .slice(1)}
+                  </div>
+                </div>
+                <div className="item">
+                  <img></img>
+                  <div>
+                    {
+                      ["매우쉬움", "쉬움", "보통", "어려움", "매우어려움"][
+                        Number(
+                          JSON.stringify(
+                            route.properties["난이도(경사)"].select.name
+                          )
+                            .split("(")[0]
+                            .slice(1)
+                        )
+                      ]
+                    }
+                  </div>
+                </div>
+                <div className="item">
+                  <img></img>
+                  <div>
+                    {JSON.stringify(
+                      route.properties["정상포함"].select.name
+                    ).slice(1, -1)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <div className="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
       <Link to="/">back</Link>
     </div>
   );
