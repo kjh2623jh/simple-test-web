@@ -1,10 +1,11 @@
-import { createElement, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Test.css";
+import Title from "./Title";
 
 function Test() {
   const [section, setSection] = useState(0);
-  const [answer, setAnswer] = useState("");
+  const [answer, setAnswer] = useState([]);
   const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
 
@@ -54,9 +55,20 @@ function Test() {
   ];
 
   const Submit = (event) => {
+    console.log(answer);
     event.preventDefault();
+
     let newAnswer = "";
     const len = selections[section].q.length;
+
+    // 뒤로가기 (버그) 앞으로갔다가 뒤로갔다가 하면 버그남
+    if (event.nativeEvent.submitter.id === "back") {
+      setSection(section - 1);
+      setAnswer(answer.slice(0, -1));
+      setCounter(Math.max(counter - len, 0));
+
+      return;
+    }
 
     // create newAnswer. 유저의 답변이 여러개일 수 있으니 for문으로 확인함
     for (let index = 0; index < len; index++) {
@@ -69,21 +81,14 @@ function Test() {
 
     // 아무것도 선택하지 않으면 submit 하지 않음
     if (newAnswer === "") {
-      createElement(
-        "div",
-        {
-          style: { color: "red", fontSize: "8px" },
-        },
-        "1개 이상의 선택지를 선택해야합니다."
-      );
       return;
     }
 
     // answer 에 newAnswer 붙이기
     if (section + 1 >= selections.length) {
-      navigate(`/result/${answer + newAnswer}`);
+      navigate(`/result/${[...answer, newAnswer].join("")}`);
     } else {
-      setAnswer(answer + newAnswer);
+      setAnswer([...answer, newAnswer]);
       setCounter(counter + len);
       setSection(section + 1);
     }
@@ -124,24 +129,24 @@ function Test() {
             ))}
             <br />
 
+            {/* 뒤로가기 */}
+            <button type="submit" className="button" id="back">
+              뒤로가기
+            </button>
+
             {/* 답변 제출 */}
             <button type="submit" className="button">
-              Submit
+              확인
             </button>
+
+            <div style={{ color: "red", fontSize: "12px" }}>
+              *1개 이상의 선택지를 선택해야합니다.
+            </div>
           </form>
         </div>
       ) : (
         // 시작 페이지
-        <div>
-          <h1 className="Title">테스트!</h1>
-          <button
-            className="btn start"
-            onClick={() => setSection(section + 1)}
-            style={{ width: "130px" }}
-          >
-            <span>시작하기</span>
-          </button>
-        </div>
+        <Title section={section} setSection={setSection} />
       )}
     </div>
   );

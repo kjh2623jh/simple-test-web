@@ -185,6 +185,7 @@ input:checked + .option {
   touch-action: manipulation;
   vertical-align: baseline;
   width: auto;
+  margin: 20px;
 }
 .button:hover,
 .button:focus {
