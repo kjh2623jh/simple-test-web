@@ -2,10 +2,37 @@
   text-align: center;
 }
 
-.text {
-  font-size: 40px;
+/* 진행 바 */
+.progressBar {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 70%;
+  height: 20px;
+  border: 2px solid rgb(178, 178, 178);
+  border-radius: 10px;
+}
+.progress {
+  background-color: rgb(0, 199, 0);
+  border-radius: 8px;
+  /* left: 20%; */
+  height: 20px;
+  transition: all 0.3s ease;
 }
 
+/* 질문 */
+.question {
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 60px;
+}
+.questionDescription {
+  font-size: 14px;
+  font-weight: 200;
+  color: gray;
+  margin-bottom: 60px;
+}
+
+/* 기본 버튼 css */
 .btn {
   width: max-content;
   height: 40px;
@@ -24,16 +51,20 @@
   outline: none;
 }
 
+/* 클릭 시 변환 */
 input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 input:checked + .option {
-  background-color: blue;
+  /* background-color: blue; */
+  border: 1px solid rgb(0, 193, 0);
+  box-shadow: 0 0 7px rgb(0, 183, 0);
+  /* filter: drop-shadow(0 0 2px rgba(36, 255, 102, 0.7)); */
 }
 
+/* 시작 버튼 */
 .start {
   background-color: #f0ecfc;
   background-image: linear-gradient(315deg, #f0ecfc 0%, #c797eb 74%);
@@ -54,10 +85,6 @@ input:checked + .option {
   right: 0;
   bottom: 0;
   background: #c797eb;
-  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-      inset -4px -4px 6px 0 rgba(255,255,255,.5),
-      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
   transition: all 0.3s ease;
 }
 .start:before {
@@ -87,10 +114,6 @@ input:checked + .option {
   left: 0;
   top: 0;
   background: #c797eb;
-  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
-                -4px -4px 6px 0 rgba(116, 125, 136, .2), 
-      inset -4px -4px 6px 0 rgba(255,255,255,.5),
-      inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
   transition: all 0.3s ease;
 }
 .start span:before {
@@ -108,6 +131,7 @@ input:checked + .option {
   width: 100%;
 }
 
+/* 선택 버튼 */
 .option {
   border: none;
   color: #000;
@@ -137,7 +161,9 @@ input:checked + .option {
   top: 2px;
 }
 
+/* 답변 제출 버튼 */
 .button {
+  position: relative;
   height: 40px;
   align-items: center;
   background-color: #ffffff;
@@ -160,18 +186,15 @@ input:checked + .option {
   vertical-align: baseline;
   width: auto;
 }
-
 .button:hover,
 .button:focus {
   border-color: rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   color: rgba(0, 0, 0, 0.65);
 }
-
 .button:hover {
   transform: translateY(-1px);
 }
-
 .button:active {
   background-color: #f0f0f1;
   border-color: rgba(0, 0, 0, 0.15);

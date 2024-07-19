@@ -27,13 +27,19 @@ function Result() {
         <div>
           {json?.results?.map((route) => (
             <div key={route.id} className="body">
+              {/* 이미지 */}
               <div className="img"></div>
+
+              {/* 등산로 이름 */}
               <div className="text">
                 {JSON.stringify(
                   route.properties["산-등산로"].title[0].plain_text
                 ).slice(1, -1)}
               </div>
+
+              {/* 등산로 정보 */}
               <div className="description">
+                {/* 소요시간 */}
                 <div className="item">
                   <img></img>
                   <div>
@@ -42,6 +48,8 @@ function Result() {
                       .slice(1)}
                   </div>
                 </div>
+
+                {/* 난이도 */}
                 <div className="item">
                   <img></img>
                   <div>
@@ -53,11 +61,13 @@ function Result() {
                           )
                             .split("(")[0]
                             .slice(1)
-                        )
+                        ) - 1
                       ]
                     }
                   </div>
                 </div>
+
+                {/* 정상여부 */}
                 <div className="item">
                   <img></img>
                   <div>
@@ -71,6 +81,7 @@ function Result() {
           ))}
         </div>
       ) : (
+        // 로딩 상태
         <div>
           <div className="lds-ellipsis">
             <div></div>

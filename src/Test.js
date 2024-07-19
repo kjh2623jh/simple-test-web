@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createElement, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Test.css";
 
@@ -11,7 +11,7 @@ function Test() {
   const selections = [
     {},
     {
-      text: "선호하는 총 소요시간",
+      text: "1. 선호하는 총 등산 소요시간은?",
       q: [
         "5시간 이상 (-25000kcal)",
         "4시간 (-2000kcal)",
@@ -21,7 +21,7 @@ function Test() {
       ],
     },
     {
-      text: "선호 경사도(난이도)",
+      text: "2. 얼마나 경사진 걸 좋아하시나요?",
       q: [
         "아주 평탄한 산책로",
         "평탄한 숲길",
@@ -31,7 +31,7 @@ function Test() {
       ],
     },
     {
-      text: "선호 등산로 노면상태",
+      text: "3. 좋아하는 노면 상태는?",
       q: [
         "흙길경사로 (산책인가 등산인가)",
         "목재계단 (발이 편하다)",
@@ -40,7 +40,7 @@ function Test() {
       ],
     },
     {
-      text: "등산로의 접근성",
+      text: "4. 어떻게 이동하고 싶으신가요?",
       q: [
         "역,버스정류장에서 도보 10분내",
         "역,버스정류장에서 도보 30분내",
@@ -48,7 +48,7 @@ function Test() {
       ],
     },
     {
-      text: "정상 포함 여부",
+      text: "5. 정상까지 올라가는 코스가 좋으신가요?",
       q: ["정상포함 (정상석x)", "정상포함 (정상석o)", "미포함"],
     },
   ];
@@ -58,6 +58,7 @@ function Test() {
     let newAnswer = "";
     const len = selections[section].q.length;
 
+    // create newAnswer. 유저의 답변이 여러개일 수 있으니 for문으로 확인함
     for (let index = 0; index < len; index++) {
       const element = event.target[index];
       if (element.checked) {
@@ -66,8 +67,19 @@ function Test() {
       }
     }
 
-    if (newAnswer === "") return;
+    // 아무것도 선택하지 않으면 submit 하지 않음
+    if (newAnswer === "") {
+      createElement(
+        "div",
+        {
+          style: { color: "red", fontSize: "8px" },
+        },
+        "1개 이상의 선택지를 선택해야합니다."
+      );
+      return;
+    }
 
+    // answer 에 newAnswer 붙이기
     if (section + 1 >= selections.length) {
       navigate(`/result/${answer + newAnswer}`);
     } else {
@@ -79,45 +91,58 @@ function Test() {
 
   return (
     <div className="Test">
-      <div id="options">
-        {section ? (
-          <div>
-            <div className="text">{selections[section].text}</div>
-            <hr />
-            <form className="options" onSubmit={Submit}>
-              {selections[section].q.map((question, idx) => (
-                <div key={idx}>
-                  <input type="checkbox" id={`check${idx}`}></input>
-                  <label
-                    htmlFor={`check${idx}`}
-                    className="btn option"
-                    id={(counter + idx).toString(20)}
-                    style={{ height: "25px", userSelect: "none" }}
-                  >
-                    {question}
-                  </label>
-                  <br /> <br />
-                </div>
-              ))}
-              <br />
-              <button type="submit" className="button">
-                Submit
-              </button>
-            </form>
+      {section ? (
+        // 설문 페이지
+        <div>
+          {/* 진행바 */}
+          <div className="progressBar">
+            <div
+              className="progress"
+              style={{ width: `${((section - 1) / 5) * 100}%` }}
+            ></div>
           </div>
-        ) : (
-          <div>
-            <h1 className="Title">테스트!</h1>
-            <button
-              className="btn start"
-              onClick={() => setSection(section + 1)}
-              style={{ width: "130px" }}
-            >
-              <span>시작하기</span>
+
+          {/* 질문 */}
+          <div className="question">{selections[section].text}</div>
+          <div className="questionDescription">*중복 선택 가능합니다.</div>
+
+          {/* 답변들 */}
+          <form onSubmit={Submit}>
+            {selections[section].q.map((question, idx) => (
+              <div key={idx}>
+                <input type="checkbox" id={`check${idx}`}></input>
+                <label
+                  htmlFor={`check${idx}`}
+                  className="btn option"
+                  id={(counter + idx).toString(20)} // 20진수로 변환하여 한 자릿수로 만듦.
+                  style={{ height: "25px", userSelect: "none" }}
+                >
+                  {question}
+                </label>
+                <br /> <br />
+              </div>
+            ))}
+            <br />
+
+            {/* 답변 제출 */}
+            <button type="submit" className="button">
+              Submit
             </button>
-          </div>
-        )}
-      </div>
+          </form>
+        </div>
+      ) : (
+        // 시작 페이지
+        <div>
+          <h1 className="Title">테스트!</h1>
+          <button
+            className="btn start"
+            onClick={() => setSection(section + 1)}
+            style={{ width: "130px" }}
+          >
+            <span>시작하기</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

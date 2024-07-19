@@ -54,7 +54,6 @@
   margin-right: 25px;
   float: left;
 }
-
 .item img {
   background-color: #cacaca;
   position: relative;
@@ -64,13 +63,13 @@
   height: 20px;
   border-radius: 5px;
 }
-
 .item div {
   position: relative;
   right: -10px;
   top: -20px;
 }
 
+/* 로딩 */
 .lds-ellipsis,
 .lds-ellipsis div {
   box-sizing: border-box;

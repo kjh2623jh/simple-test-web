@@ -11,11 +11,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// API Key, database id
 const notion = new Client({
   auth: "secret_tceQ4JUkB7qfSCdhTstWa5CowlkH1S4cMcxvnwF5G21",
 });
 const databaseId = "e33d0d3ad5764d6f83572a11508d40b8";
 
+// properties
 const properties = [
   "5시간 이상(2500kcal-)",
   "4시간(-2000kcal)",
@@ -49,7 +51,9 @@ app.get("/notion-data/:result", async (req, res) => {
     const idx = Number(result[i]) - 1;
     const propertyIdx = parseInt(result[i + 1], 20);
 
+    // 받아온 result값에 따라 filter condition 채우기
     if (idx == 2) {
+      // "노면상태" 인 경우 multi_select 를 써야함
       conditions[idx].push({
         property: sections[idx],
         multi_select: {
