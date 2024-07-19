@@ -3,17 +3,20 @@ import Test from "./Test";
 import Result from "./Result";
 import ResultErrorPage from "./ResultErrorPage";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Test />,
-  },
-  {
-    path: "/result/:result",
-    element: <Result />,
-    errorElement: <ResultErrorPage />,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Test />,
+    },
+    {
+      path: "/result/:result",
+      element: <Result />,
+      errorElement: <ResultErrorPage />,
+    },
+  ],
+  { basename: process.env.PUBLIC_URL }
+);
 
 function App() {
   return <RouterProvider router={router} />;
