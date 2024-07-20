@@ -1,18 +1,24 @@
 .Result {
   text-align: center;
 }
-
+a {
+  text-decoration: none;
+  color: black;
+}
 .body {
   margin: 0 auto;
   background: #f3f3f3;
   border-radius: 5px;
   position: relative;
   /* border-style: solid; */
-  width: 500px;
+  width: 550px;
   height: 90px;
   margin-bottom: 20px;
 }
-
+#longItemI {
+  display: inline-block;
+  margin: 5px;
+}
 .img {
   background-color: #d9d9d9;
   position: absolute;
@@ -20,6 +26,12 @@
   height: 70px;
   left: 10px;
   top: 10px;
+  border-radius: 5px;
+}
+#longImg {
+  background-color: #d9d9d9;
+  width: 20px;
+  height: 20px;
   border-radius: 5px;
 }
 
@@ -38,7 +50,7 @@
 .description {
   /* background-color: #d9d9d9; */
   position: absolute;
-  width: 400px;
+  width: 500px;
   height: 30px;
   left: 90px;
   top: 50px;
@@ -54,6 +66,18 @@
   margin-right: 25px;
   float: left;
 }
+.longItem {
+  background-color: #d9d9d9;
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  float: left;
+  display: flex;
+}
+.longItemText {
+  display: inline-block;
+  margin-top: 6px; 
+}
 .item img {
   background-color: #cacaca;
   position: relative;
@@ -67,6 +91,30 @@
   position: relative;
   right: -10px;
   top: -20px;
+}
+.linkBlock {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  height: 50px;
+}
+.linkCss1 {
+  width: 150px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: #d9d9d9;
+  margin-right: 10px;
+}
+.linkCss2 {
+  width: 170px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: #d9d9d9;
+  margin-right: 10px;
 }
 
 /* 로딩 */

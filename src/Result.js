@@ -52,7 +52,7 @@ function Result() {
                 {/* 난이도 */}
                 <div className="item">
                   <img></img>
-                  <div>
+                  <div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
                     {
                       ["매우쉬움", "쉬움", "보통", "어려움", "매우어려움"][
                         Number(
@@ -68,9 +68,9 @@ function Result() {
                 </div>
 
                 {/* 정상여부 */}
-                <div className="item">
-                  <img></img>
-                  <div>
+                <div className="longItem">
+                  <div id="longItemI"><img id="longImg"></img></div>
+                  <div className="longItemText">
                     {JSON.stringify(
                       route.properties["정상포함"].select.name
                     ).slice(1, -1)}
@@ -91,7 +91,11 @@ function Result() {
           </div>
         </div>
       )}
-      <Link to="/">back</Link>
+      <div className="linkBlock">
+        <div className="linkCss1"><Link to="/" style={{ textDecoration: 'none', color:'black' }}>등산로 재탐색!</Link></div>
+        <div className='linkCss2'><a href="https://docs.google.com/forms/d/e/1FAIpQLSdlYdDXEkocI1ihPFLEcF37_wVwghFB8BilUtsKCuIe015Nfg/viewform?usp=sf_link">설문으로 돌아가기😊</a></div>
+      </div>
+      
     </div>
   );
 }
